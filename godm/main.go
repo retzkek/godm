@@ -67,7 +67,18 @@ func main() {
 			},
 		},
 		"ls": {"ls QUERY",
-			"List all files with name matching QUERY.", nil},
+			"List all files with name matching QUERY.",
+			func(args []string) {
+				files, err := db.List(nil)
+				if err != nil {
+					log.Fatal("Error: ", err)
+				}
+				for _, f := range files {
+					fmt.Printf("%10d %16s %20s\n", f.Length,
+						f.UploadDate.Format("2006-01-02 15:04"), f.Filename)
+				}
+			},
+		},
 		"tag": {"tag FILE TAGS",
 			"Add TAGS (comma-delimited list) to FILE.", nil},
 		"search": {"search QUERY",
