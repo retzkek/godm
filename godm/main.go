@@ -79,7 +79,11 @@ func main() {
 	}
 	cmd := os.Args[1]
 	if c, ok := cmds[cmd]; ok {
-		c.Function(os.Args)
+		if c.Function != nil {
+			c.Function(os.Args)
+		} else {
+			fmt.Println("not implemented")
+		}
 	} else {
 		printHelp(os.Args)
 		os.Exit(1)
