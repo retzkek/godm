@@ -12,8 +12,8 @@ type Db struct {
 	Database string
 }
 
-// Add puts the specified file into the database.
-func (d *Db) Add(file string) error {
+// Store puts the specified file into the database.
+func (d *Db) Store(file string) error {
 	session, err := mgo.Dial(d.Address)
 	if err != nil {
 		return err
