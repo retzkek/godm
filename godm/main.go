@@ -42,7 +42,8 @@ func main() {
 				if err := db.Store(args[2]); err != nil {
 					panic(err)
 				}
-			}},
+			},
+		},
 		"get": {"get FILE",
 			"Get file by name.",
 			func(args []string) {
@@ -52,7 +53,8 @@ func main() {
 				if err := db.Get(args[2]); err != nil {
 					log.Fatal("Error: ", err)
 				}
-			}},
+			},
+		},
 		"smite": {"smite FILE",
 			"Delete file.",
 			func(args []string) {
@@ -62,13 +64,20 @@ func main() {
 				if err := db.Delete(args[2]); err != nil {
 					log.Fatal("Error: ", err)
 				}
-			}},
+			},
+		},
 		"ls": {"ls QUERY",
 			"List all files with name matching QUERY.", nil},
 		"tag": {"tag FILE TAGS",
 			"Add TAGS (comma-delimited list) to FILE.", nil},
 		"search": {"search QUERY",
 			"Search for all files matching QUERY.", nil},
+		"tour": {"tour",
+			"Take the godm tour.",
+			func(args []string) {
+				fmt.Println("Welcome to the godm tour. Where can I get some godm bait?")
+			},
+		},
 	}
 	if len(os.Args) < 2 {
 		printHelp(os.Args, cmds)
