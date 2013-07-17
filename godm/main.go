@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/retzkek/godm"
+	"log"
 	"os"
 )
 
@@ -36,8 +37,7 @@ func main() {
 			"Store file with optional comma-delimited tags.",
 			func(args []string) {
 				if len(args) < 3 {
-					fmt.Println("Insufficient arguments. 'help' for usage.")
-					os.Exit(1)
+					log.Fatal("Insufficient arguments. 'help' for usage.")
 				}
 				if err := db.Store(args[2]); err != nil {
 					panic(err)
@@ -47,15 +47,22 @@ func main() {
 			"Get file by name.",
 			func(args []string) {
 				if len(args) < 3 {
-					fmt.Println("Insufficient arguments. 'help' for usage.")
-					os.Exit(1)
+					log.Fatal("Insufficient arguments. 'help' for usage.")
 				}
 				if err := db.Get(args[2]); err != nil {
-					panic(err)
+					log.Fatal("Error: ", err)
 				}
 			}},
 		"smite": {"smite FILE",
-			"Delete file.", nil},
+			"Delete file.",
+			func(args []string) {
+				if len(args) < 3 {
+					log.Fatal("Insufficient arguments. 'help' for usage.")
+				}
+				if err := db.Delete(args[2]); err != nil {
+					log.Fatal("Error: ", err)
+				}
+			}},
 		"ls": {"ls QUERY",
 			"List all files with name matching QUERY.", nil},
 		"tag": {"tag FILE TAGS",
@@ -77,7 +84,6 @@ func main() {
 			fmt.Println("not implemented")
 		}
 	} else {
-		printHelp(os.Args, cmds)
-		os.Exit(1)
+		log.Fatal("Unknown command. 'help' for usage.")
 	}
 }

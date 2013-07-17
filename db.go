@@ -68,3 +68,18 @@ func (d *Db) Get(file string) error {
 	}
 	return nil
 }
+
+// Delete removes all files with the specified name from the database.
+func (d *Db) Delete(file string) error {
+	session, err := mgo.Dial(d.Address)
+	if err != nil {
+		return err
+	}
+	defer session.Close()
+	g := session.DB(d.Database).GridFS("godm")
+	err = g.Remove(file)
+	if err != nil {
+		return err
+	}
+	return nil
+}
