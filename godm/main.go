@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/retzkek/godm"
+	"labix.org/v2/mgo/bson"
 	"log"
 	"os"
 )
@@ -66,10 +67,15 @@ func main() {
 				}
 			},
 		},
-		"ls": {"ls QUERY",
-			"List all files with name matching QUERY.",
+		"ls": {"ls REGEX",
+			"List all files with name matching regular expression REGEX (^...$ is implied).",
 			func(args []string) {
-				files, err := db.List(nil)
+				var query interface{}
+				if len(args) > 2 {
+					regex := "^" + args[2] + "$" // make the regex match the full filename
+					query = bson.M{"filename": bson.RegEx{regex, ""}}
+				}
+				files, err := db.List(query)
 				if err != nil {
 					log.Fatal("Error: ", err)
 				}
