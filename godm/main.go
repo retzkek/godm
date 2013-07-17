@@ -29,15 +29,14 @@ func printHelp(args []string) {
 type CommandFunc func([]string)
 
 type Command struct {
-	Usage string
+	Usage     string
 	BriefHelp string
-	Function CommandFunc
+	Function  CommandFunc
 }
-
 
 func main() {
 	db := godm.Db{"localhost:27017", "test"}
-	var cmds = map[string]Command {
+	var cmds = map[string]Command{
 		"help": {"help [COMMAND]",
 			"Show help on the program or a command.",
 			func(args []string) {
@@ -73,7 +72,7 @@ func main() {
 			"Add TAGS (comma-delimited list) to FILE.", nil},
 		"search": {"search QUERY",
 			"Search for all files matching QUERY.", nil},
-		}
+	}
 	if len(os.Args) < 2 {
 		printHelp(os.Args)
 		os.Exit(1)
