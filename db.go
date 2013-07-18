@@ -1,4 +1,4 @@
-package godm
+package main
 
 import (
 	"io"

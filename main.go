@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/retzkek/godm"
 	"labix.org/v2/mgo/bson"
 	"log"
 	"os"
@@ -30,7 +29,7 @@ func printHelp(args []string, cmds map[string]Command) {
 }
 
 func main() {
-	db := godm.Db{"localhost:27017", "test"}
+	db := Db{"localhost:27017", "test"}
 	// 'help' is not in the map as it requires
 	// the contents of the map.
 	var cmds = map[string]Command{
