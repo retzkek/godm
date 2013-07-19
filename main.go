@@ -15,6 +15,7 @@ var commands = []*Command{
 	lsCmd,
 	smiteCmd,
 	storeCmd,
+	tourCmd,
 }
 
 var (
