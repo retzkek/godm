@@ -7,24 +7,25 @@ import (
 )
 
 var (
-	verbose = flag.Bool("v", true, "turn on verbose output")
+	verbose  = flag.Bool("v", true, "turn on verbose output")
+	host     = flag.String("host", "localhost:27017", "MongoDB database server")
+	database = flag.String("db", "test", "MongoDB database")
 )
 
 var commands = []*Command{
 	getCmd,
+	helpCmd,
 	lsCmd,
 	smiteCmd,
 	storeCmd,
 	tourCmd,
 }
 
-var (
-	db = &Db{"localhost:27017", "test"}
-)
-
 func main() {
 	flag.Parse()
 	args := flag.Args()
+
+	db := &Db{*host, *database}
 
 	if len(args) == 0 {
 		flag.Usage()
