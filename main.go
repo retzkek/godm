@@ -42,7 +42,7 @@ func main() {
 	db := &Db{*host, *database}
 
 	if len(args) == 0 {
-		flag.Usage()
+		helpFunc(db, nil, args)
 		os.Exit(1)
 	}
 
