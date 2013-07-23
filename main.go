@@ -23,6 +23,15 @@ var commands = []*Command{
 	tourCmd,
 }
 
+func findCommand(cmdName string) *Command {
+	for _, c := range commands {
+		if cmdName == c.Name {
+			return c
+		}
+	}
+	return nil
+}
+
 func main() {
 	flag.Parse()
 	args := flag.Args()
@@ -46,18 +55,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	cmd, args := args[0], args[1:]
-
-	found := false
-	for _, c := range commands {
-		if cmd == c.Name {
-			c.Run(db, args)
-			found = true
-			break
-		}
-	}
-
-	if !found {
+	cmdName, args := args[0], args[1:]
+	if cmd := findCommand(cmdName); cmd != nil {
+		cmd.Run(db, args)
+	} else {
 		log.Fatal("Unknown command. 'help' for usage.")
 	}
 }
